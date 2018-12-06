@@ -23,7 +23,7 @@ router.post('/short', (req, res, next) => {
     if (err) {
       console.error(err.stack)
       res.status(500).send('Something broke!')
-    } else if (shorturl.length > 0) return res.json(shorturl)
+    } else if (shorturl.length > 0) return res.json(shorturl[0])
     else {
       while (true) {
         let urlFlag = true
@@ -51,14 +51,18 @@ router.post('/short', (req, res, next) => {
   })
 })
 
+/**
+ * Method to redirect the URL (shortened) to the original URL.
+ * It uses the shortcode that is passed in the URL for lookup and redirection
+ */
 router.get('/:code', (req, res, next) => {
   const urlcode = req.params.code
   return ShortURL.find({ shortURLCode: urlcode }, (err, shortURL) => {
     if (err) {
       console.error(err.stack)
       res.status(500).send('Something broke!')
-    } else if (shortURL) {
-      res.redirect(shortURL.origURL)
+    } else if (shortURL.length > 0) {
+      res.redirect(shortURL[0].origURL)
     } else {
       res.json({ err: 'No such URL found' })
     }
