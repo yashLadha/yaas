@@ -6,12 +6,31 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { shortenUrl } from '../redux/Actions'
 
+const mapStateToProps = state => {
+  return state
+}
+
 const mapDispatchToProps = dispatch => {
   return {
     shortenUrl: url => {
       dispatch(shortenUrl(url))
     },
   }
+}
+
+const MessageDisplay = () => {
+  return (
+    <div
+      style={{
+        width: '100%',
+        textAlign: 'center',
+        margin: '0 auto',
+        padding: '32px',
+      }}
+    >
+      <a href={this.props.receivedLink}>{this.props.receivedLink}</a>
+    </div>
+  )
 }
 
 class SearchComp extends Component {
@@ -31,31 +50,37 @@ class SearchComp extends Component {
   }
 
   render() {
+    let shortenedLink = <div />
+    if (this.props.receiveStatus) shortenedLink = <MessageDisplay />
+
     return (
-      <form autoComplete="off" onSubmit={this.handleSubmit}>
-        <TextField
-          style={{ width: '100%' }}
-          value={this.state.url}
-          onChange={this.handleChange('url')}
-          variant="outlined"
-          label="URL"
-          autoComplete="off"
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="end">
-                <IconButton>
-                  <Search />
-                </IconButton>
-              </InputAdornment>
-            ),
-          }}
-        />
-      </form>
+      <div>
+        <form autoComplete="off" onSubmit={this.handleSubmit}>
+          <TextField
+            style={{ width: '100%' }}
+            value={this.state.url}
+            onChange={this.handleChange('url')}
+            variant="outlined"
+            label="URL"
+            autoComplete="off"
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton>
+                    <Search />
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+          />
+        </form>
+        {shortenedLink}
+      </div>
     )
   }
 }
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(SearchComp)

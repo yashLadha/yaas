@@ -1,6 +1,6 @@
 import * as ActionTypes from './ActionTypes'
 import fetch from 'cross-fetch'
-import { API_URL, BASE_URL } from './Shared'
+import { API_URL, SHORT_URL } from './Shared'
 
 export const requestShortenURL = url => ({
   type: ActionTypes.REQUEST_URL,
@@ -26,7 +26,7 @@ export const shortenUrl = url => dispatch => {
     .then(response => response.json())
     .then(resp => {
       if (resp.shortURLCode) {
-        dispatch(successShortenURL(BASE_URL + resp.shortURLCode))
+        dispatch(successShortenURL(SHORT_URL + resp.shortURLCode))
       }
     })
     .catch(err => console.log(err))

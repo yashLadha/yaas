@@ -2,7 +2,9 @@ import * as ActionTypes from './ActionTypes'
 
 export const Reducer = (
   state = {
+    initStatus: false,
     requestLink: '',
+    receiveStatus: false,
     receivedLink: '',
   },
   action
@@ -11,12 +13,16 @@ export const Reducer = (
     case ActionTypes.REQUEST_URL:
       return {
         ...state,
-        requestLink: action.payload
+        requestLink: action.payload,
+        initStatus: true,
+        receiveStatus: false,
       }
     case ActionTypes.RESP_URL:
       return {
         ...state,
-        receivedLink: action.payload
+        receivedLink: action.payload,
+        initStatus: false,
+        receiveStatus: true,
       }
     default:
       return state
