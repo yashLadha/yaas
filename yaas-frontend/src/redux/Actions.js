@@ -1,6 +1,6 @@
 import * as ActionTypes from './ActionTypes'
 import fetch from 'cross-fetch'
-import { API_URL, SHORT_URL } from './Shared'
+import { SHORT_URL } from './Shared'
 
 export const requestShortenURL = url => ({
   type: ActionTypes.REQUEST_URL,
@@ -15,7 +15,7 @@ export const successShortenURL = url => ({
 export const shortenUrl = url => dispatch => {
   dispatch(requestShortenURL(url))
   // Shorten the URL using api call
-  fetch(API_URL + 'short', {
+  fetch(SHORT_URL + 'short', {
     method: 'POST',
     mode: 'cors',
     headers: {

@@ -18,7 +18,7 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-const MessageDisplay = () => {
+const MessageDisplay = ({ receivedLink }) => {
   return (
     <div
       style={{
@@ -28,7 +28,7 @@ const MessageDisplay = () => {
         padding: '32px',
       }}
     >
-      <a href={this.props.receivedLink}>{this.props.receivedLink}</a>
+      <a href={receivedLink}>{receivedLink}</a>
     </div>
   )
 }
@@ -51,7 +51,7 @@ class SearchComp extends Component {
 
   render() {
     let shortenedLink = <div />
-    if (this.props.receiveStatus) shortenedLink = <MessageDisplay />
+    if (this.props.receiveStatus) shortenedLink = <MessageDisplay receivedLink={this.props.receivedLink} />
 
     return (
       <div>

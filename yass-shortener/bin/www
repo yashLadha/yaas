@@ -7,8 +7,7 @@
 let app = require('../app')
 let debug = require('debug')('yass-shortener:server')
 let http = require('http')
-let https = require('https')
-let fs = require('fs')
+
 /**
  * Get port from environment and store in Express.
  */
@@ -22,22 +21,13 @@ app.set('port', port)
 
 let server = http.createServer(app)
 
-let options = {
-    cert: fs.readFileSync('/etc/letsencrypt/live/yaas.ml/fullchain.pem'),
-    key: fs.readFileSync('/etc/letsencrypt/live/yaas.ml/privkey.pem'),
-}
-/**
- * Create HTTPS Server
- */
-let httpsServer = https.createServer(options, app)
-
 /**
  * Listen on provided port, on all network interfaces.
  */
 
-httpsServer.listen(port)
-httpsServer.on('error', onError)
-httpsServer.on('listening', onListening)
+server.listen(port)
+server.on('error', onError)
+server.on('listening', onListening)
 
 /**
  * Normalize a port into a number, string, or false.
